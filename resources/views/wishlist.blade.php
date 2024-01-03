@@ -167,6 +167,9 @@
       scroll-snap-type: y mandatory;
     }
 
+  body {
+    width: 100%;
+  }
 
 .wishListNameContainer {
     width: fit-content;
@@ -264,7 +267,7 @@
   }
   footer > h3 {
     color: #273076;
-    font-size: 5vw;
+    font-size: 2rem;
   }
   
   
@@ -285,6 +288,12 @@
   
     100% {
       transform: translateY(0);
+    }
+  }
+
+  @media only screen and (min-width: 769px) {
+    .wishListNameContainer {
+      left: 384px;
     }
   }
 </style>
