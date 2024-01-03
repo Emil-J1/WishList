@@ -6,7 +6,6 @@
     <title>Wish-list</title>
 </head>
 <body>
-    
   <section class="wishListNameContainer">
     <fieldset>
       <h1 class="wishListTitle">{{ $wishlist->wish_list_name }}</h1> 
@@ -60,7 +59,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100svh;
+            height: 100vh;
             max-width: 768px;
           }
 
@@ -160,10 +159,9 @@
       max-width: 768px;
       text-align: center;
     }
-
     
     html {
-      min-height: 100svh;
+      min-height: 100vh;
       max-width: 768px; 
       overflow-y: scroll;
       scroll-snap-type: y mandatory;

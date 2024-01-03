@@ -69,8 +69,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 100svh;
-    max-width: 768px; 
+    min-height: 100vh;
+    max-width: 768px;
   }
 
   header {
@@ -159,7 +159,7 @@
   }
 
   footer {
-    height: 6.5rem;
+    height: 10rem;
     background-image: linear-gradient(110deg, #588cda, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
     animation: breathingBackgroundGradient 4s infinite alternate;
     background-size: 300%;
