@@ -168,7 +168,7 @@
     }
 
   body {
-    width: 100%;
+    max-width: 768px;
   }
 
 .wishListNameContainer {
@@ -187,9 +187,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    min-width: 50vw;
     padding: 3vw;
-    border-radius: 0 0 5vw 5vw;
+    border-radius: 0 0 22px 22px;
     background-image: linear-gradient(110deg, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
     animation: breathingBackgroundGradient 6s infinite alternate;
     background-size: 300%;
@@ -267,7 +266,7 @@
   }
   footer > h3 {
     color: #273076;
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   
@@ -292,8 +291,15 @@
   }
 
   @media only screen and (min-width: 769px) {
+
     .wishListNameContainer {
       left: 384px;
+    }
+
+    .wishListNameContainer>fieldset {
+      width: 50vw;
+      max-width: 400px;
+      padding: 1.2rem;
     }
   }
 </style>
