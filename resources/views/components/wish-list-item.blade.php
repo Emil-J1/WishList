@@ -1,20 +1,10 @@
-<div>
-    <section class="fullPageScroll" >
-      <div class="spacer"></div>
-      <a :href="wish.WishItemLink" target="_blank" loading="lazy">
-        <img :src="wish.WishItemPicture" />
-      </a>
-    </section>
-  </div>
+<h1>{{ $wishlist->wish_list_name }} {{ $wishlist->wish_list_year }}</h1>
+<h2>{{ $wishlist->users.name }}</h2>
 
-  <script>
-    export default {
-      name: "WistListItem",
-      props: {
-        wish: Object
-      }
-    };
-    </script>
+@foreach ($wishes as $wish)
+    <p>{{ $wish->name }}</p>
+@endforeach
+
 
   <style scoped>
     .fullPageScroll {
@@ -26,7 +16,7 @@
     section {
       height: 100vh;
       padding: 15vw;
-      background-image: rgb(54, 54, 54);
+      background-image: linear-gradient(110deg, #588cda, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
       color: white;
     }
     

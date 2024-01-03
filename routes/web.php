@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterCrontroller;
+use App\Http\Controllers\WishListController;
+use App\Models\WishList;
+use Filament\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +16,12 @@ use App\Http\Controllers\RegisterCrontroller;
 |
 */
 
-Route::get('/', function () {return view('wishlist');});
+Route::get('/', function () {return view('frontpage');});
 Route::put('/wishlist/{id}/edit', 'WishListController@edit')->middleware('checkWishListOwnership');
-Route::get('/wishlist', 'WishListController@userWishListsShow');
+// Route::get('/wishlist', 'WishListController@userWishListsEdit');
+Route::get('/wishlist/{wishlist}', [WishListController::class, 'show'])->name('wishlist.show');
+
+
+
+
+

@@ -17,6 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\NavigationItem;
 
 class UserPanelProvider extends PanelProvider
 {
@@ -24,10 +25,11 @@ class UserPanelProvider extends PanelProvider
     {
         return $panel
             ->id('user')
-            ->path('user')->darkMode(false)
+            ->path('user')
             ->login()
             ->colors([
                 'primary' => Color::Amber,
+                'gray' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\\Filament\\User\\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\\Filament\\User\\Pages')
@@ -35,6 +37,12 @@ class UserPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\\Filament\\User\\Widgets')
+            ->navigationItems([
+                NavigationItem::make('Frontpage')
+                ->url('/', shouldOpenInNewTab: false)
+                ->icon('heroicon-o-home')
+                ->sort(-10),
+            ])
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
@@ -56,6 +64,7 @@ class UserPanelProvider extends PanelProvider
             ->registration()
             ->passwordReset()
             ->emailVerification()
-            ->profile();
+            ->profile()
+            ->darkMode(false);
     }
 }

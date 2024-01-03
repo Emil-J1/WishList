@@ -16,3 +16,5 @@ class Wish extends Model
 
     protected $guarded = [];
 }
+
+

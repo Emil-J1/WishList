@@ -1,44 +1,149 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wish-list</title>
+</head>
+<body>
+    
+  <section class="wishListNameContainer">
+    <fieldset>
+      <h1 class="wishListTitle">{{ $wishlist->wish_list_name }}</h1> 
+    </fieldset>
+  </section>
+    
+  <article class="wishContainer">
+    {{-- <img class="arrowImg" src="{{ asset('storage/images/arrow.png') }}" alt="Pilen peger på ønsket">
+    
+    <div class="hvidSky">
+      <p class="skyInstructionText">Click the image and find the wish.</p>
+    </div> --}}
+  
+    @if ($wishes->count() > 0)
+      @foreach ($wishes as $wish)
+        <a class="singleWishOuterLinkStyling" href="{{ $wish->wish_product_link }}" target="_blank">
+          <p class="singleWishContainer">{{ $wish->wish_product_name }}</p>
+        </a>  
+      @endforeach
+      <style>
+         footer {
+          height: 12rem;
+          background-image: linear-gradient(110deg, #588cda, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
+          animation: breathingBackgroundGradient 6s infinite alternate;
+          background-size: 300%;
+          background-position: right;
+          border-radius: 25px 25px 0 0;
+          display: flex; 
+          flex-direction: column;
+          justify-content: start;
+          padding-top: 2vh;
+        }
+      </style>
 
-        <title>Laravel</title>
+    @else 
+      <article class="emptyWishListContainer">
+        <x-heroicon-o-gift class="giftImg"/>
+        <p>Wow this wishlist is still empty - Lets hope someone fill it out soon!</p>
+      
+      <div class="buttonContainer">
+        @auth
+            <a class="cta-button" href="/user/wish-lists">See your Wishlists</a>
+          @else
+            <a class="cta-button" href="/user/login">Login</a>
+            <a class="cta-button" href="/user/register">Sign-up</a>
+        @endauth
+      </div>
+      </article>
+        <style>
+          body {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100svh;
+            max-width: 768px;
+          }
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;1,100;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
-        
-    </head>
-    <body >
-        <x-name-and-year-banner class="positionSticky"/>
-        <div class="sky">    
-        <div v-if="wishes" class="fullPageScroll">
-            <img class="arrowImg" src="{{ asset('storage/images/arrow.png') }}" alt="Pilen peger på ønsket">
-            <div class="hvidSky">
-                <p class="skyInstructionText">Klik på billedet for at finde ønsket</p>
-            </div>
-        </div>
+          
+          .emptyWishListContainer {
+            height: 55vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            align-items: center; 
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgb(50, 50, 50)
+          }
 
-            <x-wish-list-item/>
+          .giftImg {
+            width: 6rem;
+            height: 6rem;
+            animation: giftFalling 1s ease-in-out;
+            color: black;
+          }
 
-            {{-- <WishListItem v-for="(wish, index) in wishes" :key="index" :wish="wish"></WishListItem> --}}
-            <footer>
-              <p>Det var årets ønsker god Jul!</p>
-            </footer>
-          </div>
+          .emptyWishListContainer>p {
+            margin-top: 1rem;
+            width:70%;
+          }
 
-        @livewireScripts
-    </body>
+          .buttonContainer {
+            display: flex;
+            justify-content: space-evenly;
+            padding-top: 2rem;
+            margin: 0 auto;
+            width: 100%;
+          }
+
+          .cta-button {
+            border: solid 2px #273076;
+            padding: .5rem 1.5rem;
+            color: #273076;
+            text-decoration: none;
+            border-radius: 5px;
+            width: auto;
+            height: 2.5rem;
+            display: flex; 
+            justify-content: center;  
+            align-items: center;
+            box-shadow: rgba(0, 0, 0, 0.15) 2.5px 12px 25px, rgba(0, 0, 0, 0.05) 0px 8px 25px;
+          }
+          .cta-button:hover {
+            background-color: #273076;
+            color: white;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+          }  
+          
+          footer {
+            height: 10rem;
+            background-image: linear-gradient(110deg, #588cda, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
+            animation: breathingBackgroundGradient 6s infinite alternate;
+            background-size: 300%;
+            background-position: right;
+            border-radius: 25px 25px 0 0;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+          }
+        </style>
+    @endif
+    
+  </article>
+
+    <footer>
+        <h2 class="wishListAuthorName">{{ $wishlist->user->name }}'s Wishlist</h2>
+        <h3>That was all my wishes 🎁!</h3>
+    </footer>
+
+  @livewireScripts
+</body>
 </html>
 
 
-<style>
+<style scoped>
+
     #app {
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -53,87 +158,136 @@
       margin: 0;
       box-sizing: border-box;
       max-width: 768px;
+      text-align: center;
     }
+
     
     html {
-      height: 100vh;
+      min-height: 100svh;
+      max-width: 768px; 
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
     }
-    
-    body {
-      background-color: rgb(79, 77, 77);
-    }
-    
-    .positionSticky {
-      position: fixed;
-      top:0;
-      left: 50%;
-      transform: translate(-50%);
-    }
-    
-    .arrowImg {
-      position: relative;
-      width: 20vw;
-      top: 6.5vh;
-      left: 74vw;
-      rotate: 100deg;
-    }
-    
-    .hvidSky {
-      width: 40vw;
-      display: flex;
-      justify-content: center;
-      position: relative;
-      top: 10vh;
-      left: 50vw;
-      padding: 8vw;
-      background-image: url('/storage/images/Sky.png');
-      background-repeat: no-repeat;
-      background-size: contain;
-    }
-    
-    .skyInstructionText {
-      display: flex;
-      text-align: center;
-      color: black;
-      padding-top: 1rem
-      font-size: 3.5vw;
-      text-shadow: .1px .1px #000;
-      font-weight: 200;
-    }
-    
-    .sky {
-      position: fixed;
-      margin-top: 1vh;
-    }
-    
-    footer {
-      height: 15vh;
-      width: 100vw;
-      background-image: linear-gradient(45deg, #3f5f58ad, #517d74ab, rgb(34, 64, 41), rgb(22, 60, 45), rgb(13, 47, 33), rgb(5, 24, 16));
-      animation: skyGradient 6s infinite alternate;
-      background-size: 300%;
+
+
+.wishListNameContainer {
+    width: fit-content;
+    max-width: 70%;
+    margin-inline: auto;
+    border-radius: 0 0 5vw 5vw;
+    position: fixed;
+    top:0;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  
+  .wishListNameContainer>fieldset {
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-width: 50vw;
+    padding: 3vw;
+    border-radius: 0 0 5vw 5vw;
+    background-image: linear-gradient(110deg, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
+    animation: breathingBackgroundGradient 6s infinite alternate;
+    background-size: 300%;
+    background-position: right;
+    backdrop-filter: blur(50px);
+  }
+  
+  .wishListTitle {
+    font-size: 1.2rem;
+    color: #273076;
+  }
+
+  .singleWishOuterLinkStyling {
+    text-decoration: none;
+    height: 90vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    scroll-snap-align: start;
+  }
+  
+  .wishContainer {
+    position: relative;
+  }
+  .singleWishContainer {
+    font-size: 3rem;
+    color: #273076;
+    font-weight: 200;
+    width: 18rem;
+    height: 18rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 1px 2px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 50px 30px;
+  }
+  
+  .arrowImg {
+    position: relative;
+    bottom: 0;
+    left:10%;
+    float: right;
+    rotate: 100deg;
+    background-color: red;
+  }
+  
+  .hvidSky {
+    width: 250px;
+    position: relative;
+    top: 0;
+    left: 10%;
+    /* padding: 8vw; */
+    background-image: url('/storage/images/Sky.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: blue
+  }
+  
+  .skyInstructionText {
+    display: flex;
+    text-align: center;
+    color: black;
+    padding-top: 1rem
+    font-size: 3.5vw;
+    text-shadow: .1px .1px #000;
+    font-weight: 200;
+  }
+  
+  .wishListAuthorName {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: .25rem;
+  }
+  footer > h3 {
+    color: #273076;
+    font-size: 5vw;
+  }
+  
+  
+  @keyframes breathingBackgroundGradient {
+    0% {
       background-position: right;
-      border-radius: 25px 25px 0 0;
     }
-    
-    footer > p {
-      color: white;
-      font-size: 5vw;
-      padding: 4vw;
+  
+    100% {
+      background-position: left;
     }
-    
-    @keyframes skyGradient {
-      0% {
-        background-position: right;
-      }
-    
-      100% {
-        background-position: left;
-      }
+  }
+
+  @keyframes giftFalling {
+    0% {
+      transform: translateY(-100vh);
     }
-    
-    
-    </style>
+  
+    100% {
+      transform: translateY(0);
+    }
+  }
+</style>
     

@@ -3,21 +3,19 @@
 namespace App\Filament\User\Resources;
 
 use App\Filament\User\Resources\WishResource\Pages;
-use App\Filament\User\Resources\WishResource\RelationManagers;
 use App\Models\Wish;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class WishResource extends Resource
 {
     protected static ?string $model = Wish::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static bool $shouldRegisterNavigation = false;
 
     public static function form(Form $form): Form
     {
