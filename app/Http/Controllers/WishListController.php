@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\WishList;
 
 class WishListController extends Controller
-{   public function index()
+{   
+    public function index()
     {
          $user = Auth::user();
          $wishlists = $user->wishlists;
