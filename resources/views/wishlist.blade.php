@@ -26,7 +26,7 @@
       @foreach ($wishes as $wish)
         <a class="singleWishOuterLinkStyling" href="{{ $wish->wish_product_link }}" target="_blank">
           <article class="singleWishContainer">
-            <img src="{{ $wish->wish_product_image ? $wish->wish_product_image : '/storage/images/gift-icon-without-background.png'}}" alt="{{ $wish->wish_product_name }}">
+            <img src="{{ $wish->wish_product_image ? $wish->wish_product_image : '/storage/images/gift-icon-without-background.png'}}" alt="{{ $wish->wish_product_name }}" loading="lazy">
             <p>{{ $wish->wish_product_name }}</p>
           </article>
         </a>  

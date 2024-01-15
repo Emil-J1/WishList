@@ -13,9 +13,12 @@
   </header>
 
   <section class="hero-section">
+
     <a href="/user/wish-lists"><x-heroicon-o-gift class="giftImg"/></a>
+
     <h2>Welcome to your Wishlist webapplication!</h2>
     <p class="description">Create and manage your wishlists effortlessly.</p>
+
     <div class="buttonContainer">
       @auth
           <a class="cta-button" href="/user/wish-lists">See your Wishlists</a>

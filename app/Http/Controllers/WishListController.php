@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\WishList;
 
 class WishListController extends Controller
@@ -21,16 +22,27 @@ class WishListController extends Controller
         $wishlist = WishList::find($id);
 
         if (Auth::id() !== $wishlist->user_id) {
-            // The currently authenticated user is not the owner of the wishlist.
-            // Redirect them back with an error message.
+            // The currently authenticated user is not the owner of the wishlist, redirect them back with an error message.
             return redirect()->back()->with('error', 'Whoops, you do not have permission to edit this wishlist.');
         }
     }
 
     public function show(WishList $wishlist)
     {
-        // The dynamic $wishes variable, is a collection of all the wishes from a wishlist.
-        $wishes = $wishlist->wishes;
-        return view('wishlist')->with('wishes', $wishes)->with('wishlist', $wishlist);
+        try {
+            // Use findOrFail to get the model or throw an exception if not found
+            $wishlist = WishList::findOrFail($wishlist->id);
+    
+            // The dynamic $wishes variable is a collection of all the wishes from a wishlist.
+            $wishes = $wishlist->wishes;
+    
+            // Get the WishList name to add it to the shared 'WishLists' URL.
+            // To achieve more unique shared links for each user's WishLists.
+            $wishListName = $wishlist->wish_list_name;
+    
+            return view('wishlist')->with('wishes', $wishes)->with('wishlist', $wishlist)->with('wishListName', $wishListName);
+        } catch (ModelNotFoundException $exception) {
+            return redirect('/');
+        }
     }
 };
