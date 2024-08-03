@@ -13,7 +13,14 @@
   </header>
 
   <section class="hero-section">
-    <a href="/user/wish-lists"><x-heroicon-o-gift class="giftImg"/></a>
+    
+    {{-- <a href="/user/wish-lists"><x-heroicon-o-gift class="giftImg"/></a> --}}
+    
+    <div class="gift3D">
+      <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.25/build/spline-viewer.js"></script>
+      <spline-viewer url="https://prod.spline.design/LlRHPRDcTdUUNZDL/scene.splinecode"></spline-viewer>
+    </div>
+
     <h2>Welcome to your Wishlist webapplication!</h2>
     <p class="description">Create and manage your wishlists effortlessly.</p>
     <div class="buttonContainer">
@@ -91,6 +98,12 @@
     color: #273076;
   }
 
+  .gift3D {
+    /* display: none !important;
+    visibility: hidden !important; */
+    height: 30vh;
+  }
+
   .giftImg {
     width: 6rem;
     height: 6rem;
@@ -106,6 +119,7 @@
     min-height: 70vh;
     padding: 2rem;
     text-align: center;
+    z-index: 10;
   }
 
   .description {
