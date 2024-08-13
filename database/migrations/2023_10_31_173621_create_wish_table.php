@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string("wish_product_name");
-            $table->string("wish_product_link");
-            $table->string("wish_product_image");
+            $table->text("wish_product_link");
+            $table->text("wish_product_image");
             $table->foreignId("wish_list_id")->constrained()->cascadeOnDelete();
         });
     }

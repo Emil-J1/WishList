@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('wish_lists', function (Blueprint $table) {
-            $table->string('wish_list_image')->nullable()->after('wish_list_year');
+            $table->string('wish_list_image')->nullable()->after('user_id');
         });
     }
 

@@ -13,6 +13,8 @@ class WishResource extends Resource
 {
     protected static ?string $model = Wish::class;
 
+    protected static ?string $pluralModelLabel = 'Ønske';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static bool $shouldRegisterNavigation = false;

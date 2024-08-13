@@ -15,7 +15,7 @@ class ListWishLists extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make()->label('Create new wish list'),
+            Actions\CreateAction::make()->label('Opret ny ønskeliste'),
         ];
     }
 };

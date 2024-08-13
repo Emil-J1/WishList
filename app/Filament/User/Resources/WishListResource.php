@@ -17,6 +17,8 @@ class WishListResource extends Resource
 {
     protected static ?string $model = WishList::class;
 
+    protected static ?string $pluralModelLabel = 'Ønskelister';
+
     protected static ?string $navigationIcon = 'heroicon-o-gift';
 
 
@@ -36,15 +38,10 @@ class WishListResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-                Forms\Components\Section::make('Wish list')->schema([
-                    Forms\Components\TextInput::make('wish_list_name')
+                Forms\Components\Section::make()->schema([
+                    Forms\Components\TextInput::make('wish_list_name')->label('Ønskelistens navn')
                         ->required()
-                        ->prefixIcon('heroicon-o-gift'),
-                    Forms\Components\DatePicker::make('wish_list_year')
-                        ->native(false)
-                        ->prefixIcon('heroicon-o-calendar')
-                        ->nullable()
-                        ->label('Add a year for your wish list'),
+                        ->prefixIcon('heroicon-o-gift')
                 ]),
             ])->live();
     }
@@ -59,38 +56,26 @@ class WishListResource extends Resource
                 $query->where('user_id', $id);
             })
             ->columns([
-                Tables\Columns\TextColumn::make('wish_list_name')
+                Tables\Columns\TextColumn::make('wish_list_name')->label('Ønskelistens navn')
                     ->numeric()
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('wishes_count')->counts('wishes'),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('wish_list_year')
-                    ->date()
-                    ->sortable()
-                    ->searchable()
-                    ->label('Wish list year'),
+                Tables\Columns\TextColumn::make('wishes_count')->counts('wishes')->label('Antal ønsker'),
+           
             ])
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                ->label('Share')
+                ->label('Del Ønskelisten')
                 ->icon('heroicon-o-gift')
                 ->button()
                 ->outlined()
                 ->url(fn (WishList $wishlist) => route('wishlist.show', $wishlist))
                 ->openUrlInNewTab(),
                 Tables\Actions\EditAction::make()
-                ->label('Edit')
+                ->label('')
                 ->button()
                 ->outlined(),
             ])

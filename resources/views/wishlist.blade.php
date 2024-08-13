@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
     <title>Wish-list</title>
+    @php
+      $totalWishes = count($wishes); // Tæller det samlede antal ønsker på ønskelisten
+    @endphp
 </head>
 <body>
   <a href="/">
@@ -16,23 +19,20 @@
   </a>
     
   <article class="wishContainer">
-    {{-- <img class="arrowImg" src="{{ asset('storage/images/arrow.png') }}" alt="Pilen peger på ønsket"> --}}
-    
-    {{-- <div class="hvidSky">
-      <p class="skyInstructionText">Click the image and find the wish.</p>
-    </div> --}}
-  
     @if ($wishes->count() > 0)
-      @foreach ($wishes as $wish)
+      @foreach ($wishes as $index => $wish)
         <a class="singleWishOuterLinkStyling" href="{{ $wish->wish_product_link }}" target="_blank">
           <article class="singleWishContainer">
-            <img src="{{ $wish->wish_product_image ? $wish->wish_product_image : '/storage/images/gift-icon-without-background.png'}}" alt="{{ $wish->wish_product_name }}">
-            <p>{{ $wish->wish_product_name }}</p>
+            <p class="giftCount">{{ $index + 1 }} / {{ $totalWishes }}</p>
+            <img src="{{ asset('storage/' . $wish->wish_product_image) ? asset('storage/' . $wish->wish_product_image) : asset('/storage/images/apple-touch-icon.png')}}" alt="{{ $wish->wish_product_name }}">
+            <p class="giftName">{{ $wish->wish_product_name }}</p>
           </article>
         </a>  
       @endforeach
       <style>
          footer {
+            height: auto;
+            width: 96%;
             background-image: linear-gradient(110deg, #588cda, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
             animation: breathingBackgroundGradient 6s infinite alternate;
             background-size: 300%;
@@ -41,41 +41,31 @@
             display: flex; 
             flex-direction: column;
             justify-content: start;
-            padding-top: 2rem;
-            height: 30vh;
             scroll-snap-align: start;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            margin: 0 auto;
           }
       </style>
 
     @else 
       <article class="emptyWishListContainer">
         <x-heroicon-o-gift class="giftImg"/>
-        <p>Wow this wishlist is still empty - Lets hope someone fill it out soon!</p>
+        <p>Wow, denne ønskeliste er tom som en sparegris efter Black Friday - Det ændrer sig forhåbentligt snart!</p>
       
       <div class="buttonContainer">
         @auth
-            <a class="cta-button" href="/user/wish-lists">See your Wishlists</a>
+            <a class="cta-button" href="/user/wish-lists">Se dine ønskelister</a>
           @else
             <a class="cta-button" href="/user/login">Login</a>
-            <a class="cta-button" href="/user/register">Sign-up</a>
+            <a class="cta-button" href="/user/register">Opret dig her</a>
         @endauth
       </div>
       </article>
         <style>
-          body {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100vh;
-            max-width: 768px;
-          }
-
-          
           .emptyWishListContainer {
-            height: 55vh;
             display: flex;
             flex-direction: column;
-            justify-content: end;
             align-items: center; 
             text-align: center;
             font-size: 1.2rem;
@@ -95,7 +85,8 @@
           }
           
           footer {
-            height: 10rem;
+            height: auto;
+            width: 96%;
             background-image: linear-gradient(110deg, #588cda, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
             animation: breathingBackgroundGradient 6s infinite alternate;
             background-size: 300%;
@@ -104,22 +95,27 @@
             display: flex; 
             flex-direction: column;
             justify-content: center;
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+            margin: 0 auto;
           }
+
+
         </style>
     @endif
     
   </article>
 
     <footer>
-        <h2 class="wishListAuthorName">{{ $wishlist->user->name }}'s Wishlist</h2>
-        <h3>That was all my wishes 🎁!</h3>
+        <h2 class="wishListAuthorName">{{ $wishlist->user->name }}'s Ønskeliste</h2>
+        <h3>Det var alle mine ønsker!</h3>
 
         <div class="buttonContainer">
           @auth
-              <a class="cta-button" href="/user/wish-lists">See your Wishlists</a>
+              <a class="cta-button" href="/user/wish-lists">Se dine ønskelister</a>
             @else
               <a class="cta-button" href="/user/login">Login</a>
-              <a class="cta-button" href="/user/register">Sign-up</a>
+              <a class="cta-button" href="/user/register">Opret dig her</a>
           @endauth
         </div>
     </footer>
@@ -129,41 +125,41 @@
 </html>
 
 
-<style scoped>
+<style>
 
-    #app {
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-align: center;
-      color: black;
-      font-size: 2vw;
-    }
-    
-    * {
-      font-family: 'Josefin Sans', sans-serif;
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-      max-width: 768px;
-      text-align: center;
-    }
-    
-    html {
-      min-height: 100vh;
-      max-width: 768px; 
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-    }
-
+  #app {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: black;
+    font-size: 2vw;
+  }
+  
+  * {
+    font-family: 'Josefin Sans', sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  html {
+    min-height: 100vh;
+    max-width: 768px; 
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+  }
+  
   body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
     max-width: 768px;
   }
 
-.wishListNameContainer {
+  .wishListNameContainer {
     width: fit-content;
-    min-width: 55%;
-    max-width: 350px;
-    padding: 0 1rem 1rem 1rem;
     margin-inline: auto;
     border-radius: 0 0 5vw 5vw;
     position: fixed;
@@ -178,7 +174,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    padding: 3vw;
+    padding: 1rem;
     border-radius: 0 0 22px 22px;
     background-image: linear-gradient(110deg, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
     animation: breathingBackgroundGradient 6s infinite alternate;
@@ -202,9 +198,6 @@
     scroll-snap-align: start;
   }
 
-  .wishContainer {
-    position: relative;
-  }
   .singleWishContainer {
     font-size: 2rem;
     color: #273076;
@@ -221,17 +214,36 @@
     box-shadow: rgba(255, 255, 255, 0.2) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.9) 0px 0px 1px 2px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 50px 30px;
   }
-  .singleWishContainer>img {
-    max-width: 12rem;
-    max-height: 15rem;
-    margin-bottom: 1rem;
+
+  .giftCount {
+    min-height: 2rem;
+    min-width: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: flex-end;
+    font-size: .8rem;
+    color: #273076;
+    border-radius: 100%;
+    background-image: linear-gradient(110deg, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
+    animation: breathingBackgroundGradient 6s infinite alternate;
+    background-size: 300%;
+    margin-right: .6rem;
+    margin-top: .6rem;
   }
-  .singleWishContainer>p {
+
+  .singleWishContainer>img {
+    max-width: 15rem;
+    max-height: 15rem;
+    margin: .8rem 0;
+    border-radius:5px;
+  }
+  .giftName {
     font-size: 1.6rem;
     font-weight: 200;
     color: #273076;
     text-align: center;
-    padding: 0 1rem;
+    padding: .5rem 1rem;
   }
   
   .buttonContainer {
@@ -294,48 +306,56 @@
   }
   
   @media only screen and (min-width: 769px) {
-    
-    .wishListNameContainer {
-      left: 370px;
-      transform: translate(-200px);
+    html {
+      html {
+      width: 100vw;
     }
-    
-    .wishListNameContainer>fieldset {
-      width: 50vw;
-      max-width: 400px;
-      padding: 1.2rem;
     }
-  }
 
-  /* .arrowImg {
-    position: relative;
-    top: 30vh;
-    left: -8vw;
-    float: right;
-    rotate: 100deg;
-    width: 150px;
-  } */
-  
-  /* .hvidSky {
-    height: 150px;
-    position: relative;
-    top: 40vh;
-    right: 0;
-    padding: 8vw;
-    background-image: url('/storage/images/Sky.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: #273076
+    .wishListNameContainer {
+      height: fit-content;
+      min-width: 20rem;
+      margin: 0 auto;
+    }
+
+    .wishListNameContainer>fieldset {
+      padding: 1.5rem;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100svh;
+      min-width: 100vw;
+      place-items: center;
+    }
+
+    .description {
+      font-size: 1.2rem;
+    }
+
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; 
+      min-height: 70vh;
+      padding: 8rem 0;
+    }
+
+    footer {
+      height: auto;
+      width: 65%;
+      padding-top: 0rem;
+      padding-bottom: 2rem;
+      margin: 0 auto;
+    }
+
+    footer > h2 {
+      color: #273076;
+      margin-top: 2.5rem;
+      font-size: 1.2rem
+    } 
   }
-  
-  .skyInstructionText {
-    display: flex;
-    text-align: center;
-    color: black;
-    padding-top: 1rem
-    font-size: 3.5vw;
-    text-shadow: .1px .1px #000;
-    font-weight: 200;
-  } */
 </style>
     

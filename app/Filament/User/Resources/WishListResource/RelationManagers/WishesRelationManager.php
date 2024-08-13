@@ -4,6 +4,7 @@ namespace App\Filament\User\Resources\WishListResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -14,25 +15,30 @@ class WishesRelationManager extends RelationManager
 {
     protected static string $relationship = 'wishes';
 
+    protected static ?string $title = 'Dine ønsker';
+
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Your new wish for this wishlist')->schema([
+                Forms\Components\Section::make()->schema([
                     Forms\Components\Grid::make()->schema([
                         Forms\Components\TextInput::make('wish_product_name')
-                            ->label('Create a name for the wish')
+                            ->label('Ønskets navn')
                             ->required()
-                            ->prefixIcon('heroicon-o-gift-top'),
-                        Forms\Components\TextInput::make('wish_product_image')
-                            ->label('Insert a link to an image of the wish')
+                            ->prefixIcon('heroicon-o-gift-top')
+                            ->columnSpanFull(),
+                        FileUpload::make('wish_product_image')
+                            ->label('Billede til ønsket')
                             ->required()
-                            ->prefixIcon('heroicon-o-photo'),
+                            ->image()
+                            ->imageEditor()
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('wish_product_link')
-                            ->columnSpanFull()
-                            ->label('Insert a link to find the wish')   
-                            ->required()
-                            ->prefixIcon('heroicon-o-link'),
+                        ->label('Link til ønsket')   
+                        ->required()
+                        ->prefixIcon('heroicon-o-link')
+                        ->columnSpanFull(),
                     ]),
                 ]),
             ])->live();
@@ -50,11 +56,17 @@ class WishesRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()->label('Add a new wish'),
+                Tables\Actions\CreateAction::make()->label('Tilføj nyt ønske')->createAnother(false),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                ->label('')
+                ->button()
+                ->outlined(),
+                Tables\Actions\DeleteAction::make()
+                ->label('')
+                ->button()
+                ->outlined(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

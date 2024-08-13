@@ -24,6 +24,7 @@ class UserPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+            ->default()
             ->id('user')
             ->path('user')
             ->login()
@@ -34,18 +35,16 @@ class UserPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\\Filament\\User\\Resources')
             ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\\Filament\\User\\Pages')
             ->pages([
-                Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\\Filament\\User\\Widgets')
             ->navigationItems([
-                NavigationItem::make('Frontpage')
+                NavigationItem::make('Forside')
                 ->url('/', shouldOpenInNewTab: false)
                 ->icon('heroicon-o-home')
                 ->sort(-10),
             ])
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

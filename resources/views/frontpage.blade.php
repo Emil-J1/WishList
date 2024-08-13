@@ -4,31 +4,28 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
-    <title>Frontpage</title>
+    <title>Forside</title>
 </head>
 
 <body>
   <header>
-    <h1>Your Wishlist app</h1>
+    <h1>Din ønskeliste</h1>
   </header>
 
   <section class="hero-section">
     
-    {{-- <a href="/user/wish-lists"><x-heroicon-o-gift class="giftImg"/></a> --}}
-    
-    <div class="gift3D">
-      <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.25/build/spline-viewer.js"></script>
-      <spline-viewer url="https://prod.spline.design/LlRHPRDcTdUUNZDL/scene.splinecode"></spline-viewer>
-    </div>
+    <a href="/user/wish-lists"><x-heroicon-o-gift class="giftImg"/></a>
 
-    <h2>Welcome to your Wishlist webapplication!</h2>
-    <p class="description">Create and manage your wishlists effortlessly.</p>
+    <div class="descriptionContainer">
+      <h2>Del din ønskeliste med dem du holder af!</h2>
+      <p class="description">Opret og del din ønskeliste med få klik.</p>
+    </div>
     <div class="buttonContainer">
       @auth
-          <a class="cta-button" href="/user/wish-lists">See your Wishlists</a>
+          <a class="cta-button" href="/user/wish-lists">Se dine ønskelister</a>
         @else
           <a class="cta-button" href="/user/login">Login</a>
-          <a class="cta-button" href="/user/register">Sign-up</a>
+          <a class="cta-button" href="/user/register">Opret konto</a>
       @endauth
     </div>
   </section>
@@ -39,13 +36,13 @@
         <div class="wishlist-card">
             <h3>{{ $wishlist->wish_list_name }}</h3>
             <p>{{ $wishlist->users.name }}</p>
-            <a href="{{ route('view-wishlist', ['id' => $wishlist->id]) }}">View Wishlist</a>
+            <a href="{{ route('view-wishlist', ['id' => $wishlist->id]) }}">Se ønskeliste</a>
         </div>
     @endforeach
   </div> --}}
 
   <footer>
-    <h2>It's never to late to make <br> a wish!</h2>
+    <h2>Det er aldrig for sent at få <br> opfyldt sine ønsker!</h2>
   </footer>
   
 </body>
@@ -71,19 +68,22 @@
     box-sizing: border-box;
     max-width: 768px;
     text-align: center;
+    height: 100%;
+    overflow: hidden;
   }
-  
+
   body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 100vh;
+    min-height: 100svh;
     max-width: 768px;
   }
 
   header {
-    height: 3rem;
+    height: 5rem;
     width: 60%;
+    margin: auto;
     background-image: linear-gradient(110deg, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
     animation: breathingBackgroundGradient 6s infinite alternate;
     background-size: 300%;
@@ -91,22 +91,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
   }
   header > h1 {
+    height: 4.5rem;
+    margin-top: 2.5rem;
     font-size: 1.2rem;
     color: #273076;
   }
 
-  .gift3D {
-    /* display: none !important;
-    visibility: hidden !important; */
-    height: 30vh;
-  }
 
   .giftImg {
     width: 6rem;
-    height: 6rem;
     margin: 0 auto;
     animation: giftFalling 1s ease-in-out;
     color: black;
@@ -120,6 +115,11 @@
     padding: 2rem;
     text-align: center;
     z-index: 10;
+  }
+  .descriptionContainer {
+    display: flex;
+    flex-direction: column;
+    font-family: ;
   }
 
   .description {
@@ -148,6 +148,7 @@
     justify-content: center;  
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.15) 2.5px 12px 25px, rgba(0, 0, 0, 0.05) 0px 8px 25px;
+    font-weight: bold;
   }
   .cta-button:hover {
     background-color: #273076;
@@ -175,19 +176,21 @@
 
   footer {
     height: 10rem;
+    width: 90%;
     background-image: linear-gradient(110deg, #588cda, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
     animation: breathingBackgroundGradient 4s infinite alternate;
     background-size: 300%;
     background-position: right;
     border-radius: 25px 25px 0 0;
     display: flex; 
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
+    align-self: center;
   }
   
   footer > h2 {
     color: #273076;
-    padding: 4vw;
+    margin-top: 3rem;
     font-size: 1.2rem
   }
   
@@ -210,6 +213,49 @@
       transform: translateY(0);
     }
   }
+
+  @media only screen and (min-width: 769px) {
+
+  * {
+    max-width: 100vw;
+  }
+  
+  header {
+    height: 5rem;
+    width: 40%;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100svh;
+    max-width: 100vw;
+    place-items: center;
+  }
+
+  .description {
+    font-size: 1.2rem;
+  }
+
+  .hero-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    min-height: 70vh;
+    padding: 8rem 0;
+  }
+
+  footer {
+    width: 60%;
+  }
+
+  footer > h2 {
+    color: #273076;
+    margin-top: 5rem;
+    font-size: 1.2rem
+  }
+}
   
 </style>
     

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('wish_lists', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->date('wish_list_year')->nullable();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
         });
     }

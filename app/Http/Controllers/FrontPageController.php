@@ -16,7 +16,7 @@ class FrontPageController extends Controller
         if (Auth::id() !== $wishlist->user_id) {
             // The currently authenticated user is not the owner of the wishlist.
             // Redirect them back with an error message.
-            return redirect()->back()->with('error', 'Whoops, you do not have permission to edit this wishlist.');
+            return redirect()->back()->with('error', 'Ups, du har ikke tilladelse til at redigere denne ønskeliste.');
         }
     }
 

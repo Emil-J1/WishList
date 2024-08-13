@@ -9,4 +9,6 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateWish extends CreateRecord
 {
     protected static string $resource = WishResource::class;
+
+    protected static bool $canCreateAnother = false;
 }
