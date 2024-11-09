@@ -33,6 +33,12 @@ class WishesRelationManager extends RelationManager
                             ->required()
                             ->image()
                             ->imageEditor()
+                            ->imageEditorEmptyFillColor('#FFFFFF')
+                            ->imageCropAspectRatio('1:1')
+                            ->imageResizeMode('cover')
+                            ->imageResizeTargetWidth('500')
+                            ->imageResizeTargetHeight('500')
+                            ->fetchFileInformation(false)
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('wish_product_link')
                         ->label('Link til ønsket')   
@@ -54,7 +60,9 @@ class WishesRelationManager extends RelationManager
             ])
             ->filters([
                 //
-            ])
+                ])
+            ->reorderable('order')
+            ->defaultSort('order')
             ->headerActions([
                 Tables\Actions\CreateAction::make()->label('Tilføj nyt ønske')->createAnother(false),
             ])

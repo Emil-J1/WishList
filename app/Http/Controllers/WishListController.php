@@ -30,7 +30,7 @@ class WishListController extends Controller
     public function show(WishList $wishlist)
     {
         // The dynamic $wishes variable, is a collection of all the wishes from a wishlist.
-        $wishes = $wishlist->wishes;
+        $wishes = $wishlist->wishes()->orderBy('order')->get();
         return view('wishlist')->with('wishes', $wishes)->with('wishlist', $wishlist);
     }
 };
