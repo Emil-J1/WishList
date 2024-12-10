@@ -3,8 +3,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     <title>Forside</title>
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
 </head>
 
 <body>
@@ -14,7 +18,24 @@
 
   <section class="hero-section">
     
-    <a href="/user/wish-lists"><x-heroicon-o-gift class="giftImg"/></a>
+    <!-- <a href="/user/wish-lists"><x-heroicon-o-gift class="giftImg"/></a> -->
+
+    <model-viewer
+    id="giftModel"
+    class="giftClass"
+    src="{{ asset('Gift-falling-shiny-blue-ribbon-baby-blue.glb') }}"
+    alt="Animeret model"
+    loading="eager"
+    auto-rotate
+    camera-controls
+    disable-tap
+    disable-zoom
+    shadow-intensity="1"
+    ar
+    ar-modes="webxr scene-viewer"
+    >
+
+  </model-viewer>
 
     <div class="descriptionContainer">
       <h2>Del din ønskeliste med dem du holder af!</h2>
@@ -45,6 +66,26 @@
     <h2>Det er aldrig for sent at få <br> opfyldt sine ønsker!</h2>
   </footer>
   
+  <script>
+    const modelViewer = document.querySelector("#giftModel");
+
+    // Wait for the model to load completely
+    modelViewer.addEventListener("load", async () => {
+      await modelViewer.updateComplete; // Ensure model is fully loaded and ready to play the animation
+
+      // Dynamically adjust camera based on the model
+      modelViewer.cameraOrbit = "38deg 55deg 250m"; // Adjust angle and distance for better view
+      modelViewer.cameraTarget = "0 1m 0"; // Focus on the center of the model
+
+      modelViewer.play({ repetitions: 1 }); // Animations repetitions
+
+      // Optional: You can listen for when the animation finishes and set currentTime to the end to hold the final position
+      modelViewer.addEventListener("finished", () => {
+        modelViewer.currentTime = modelViewer.duration;
+      });
+    });
+  </script>
+
 </body>
 </html>
 
@@ -193,6 +234,13 @@
     margin-top: 3rem;
     font-size: 1.2rem
   }
+
+  .giftClass {
+    width: 100%;
+    height: 50%;
+    margin: 0 auto 2rem 0;
+    animation: giftFalling 1s ease-in-out;
+  }
   
   @keyframes breathingBackgroundGradient {
     0% {
@@ -254,6 +302,13 @@
     color: #273076;
     margin-top: 5rem;
     font-size: 1.2rem
+  }
+
+  .giftClass {
+    width: 100%;
+    height: 50%;
+    margin: 0 auto 2rem 0;
+    animation: giftFalling 1s ease-in-out;
   }
 }
   

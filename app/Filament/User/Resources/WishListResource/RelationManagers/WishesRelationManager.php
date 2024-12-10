@@ -53,6 +53,7 @@ class WishesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->paginated(false)
             ->recordTitleAttribute('wish_product_name')
             ->columns([
                 Tables\Columns\TextColumn::make('wish_product_name')

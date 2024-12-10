@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     <title>Wish-list</title>
     @php
       $totalWishes = count($wishes); // Tæller det samlede antal ønsker på ønskelisten
@@ -203,6 +203,7 @@
     color: #273076;
     font-weight: 200;
     width: 350px;
+    padding: .5rem;
     min-height: 22rem;
     max-height: 500px;
     display: flex;
@@ -223,11 +224,12 @@
     align-items: center;
     align-self: flex-end;
     font-size: .8rem;
-    color: #273076;
-    border-radius: 100%;
     background-image: linear-gradient(110deg, #a1d4e7, #D7F1FE, #E2E8FF, #C7CDFF, #D4BBFF, #C8C8FE, #E3C5FE);
     animation: breathingBackgroundGradient 6s infinite alternate;
     background-size: 300%;
+    color: #273076;
+    padding:0 .5rem;
+    border-radius: 20px;
     margin-right: .6rem;
     margin-top: .6rem;
   }
